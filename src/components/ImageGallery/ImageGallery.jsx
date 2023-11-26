@@ -4,7 +4,6 @@ import css from './ImageGallery.module.css';
 
 export default class ImageGallery extends Component {
   render() {
-    console.log(this.props.fetchedImages);
     return (
       <ul className={css.ImageGallery}>
         {this.props.fetchedImages.map(fetchedImage => (

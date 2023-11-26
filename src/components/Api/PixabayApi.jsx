@@ -7,4 +7,16 @@ export const getImages = async query => {
   const url = `${baseUrl}/?key=${apiKey}&q=${query}`;
   const resp = await axios.get(url);
   return resp.data.hits;
+
+  //SYMULACJIA DŁUŻSZEGO LOADINGU
+
+  // return new Promise(res => {
+  //   setTimeout(async () => {
+  //     const url = `${baseUrl}/?key=${apiKey}&q=${query}`;
+  //     const resp = await axios.get(url);
+  //     res(resp.data.hits);
+  //   }, 2000);
+  // });
+
+  ///////////////////////////////
 };
