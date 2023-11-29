@@ -50,26 +50,29 @@ export class App extends Component {
   };
 
   ifLoadMore = async () => {
-    this.setState(
-      prevState => {
-        return { page: prevState.page + 1 };
-      },
-      async () => {
-        console.log(this.state.page);
-        const fetchedImages = await getImages(
-          this.state.query,
-          this.state.page
-        );
-        if (fetchedImages === undefined) {
-          this.setState({ moreBtn: false });
-          return;
-        }
-        this.setState(prevState => {
-          return { images: prevState.images.concat(fetchedImages) };
-        });
-      }
-    );
+    this.setState(prevState => {
+      return { page: prevState.page + 1 };
+    });
   };
+  fetchMore = async () => {
+    const fetchedImages = await getImages(this.state.query, this.state.page);
+    if (fetchedImages === undefined) {
+      this.setState({ moreBtn: false });
+      return;
+    }
+    this.setState(prevState => {
+      return { images: prevState.images.concat(fetchedImages) };
+    });
+  };
+
+  async componentDidUpdate(prevProps, prevState) {
+    if (this.state.query !== prevState.query) {
+      this.fetchApi(this.state.query);
+    }
+    if (this.state.page !== prevState.page) {
+      this.fetchMore();
+    }
+  }
 
   render() {
     const { images, errorMsg, isLoading, moreBtn } = this.state;
